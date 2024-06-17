@@ -5,6 +5,7 @@ import streamlit as st
 
 import re
 
+dict_tone = {1: 'негативно', 2: 'умеренно негативно', 3: 'нейтрально', 4: 'умеренно позитивно', 5: 'позитивно'}
 
 def clear_text(text: str) -> str:
     text = re.sub(r'\?{2,}', '', text)
@@ -24,7 +25,7 @@ ner = NER_Pipeline(model_name=NER_MODEL_NAME)
 tsa = TSA_Pipeline(model_name=TSA_MODEL_NAME)
 
 st.sidebar.subheader('О приложении')
-st.sidebar.write('Определение тональности текста относительно компаний, представленых в нём')
+st.sidebar.write('Анализ тональности текста относительно компаний, представленых в нём')
 
 # start the user interface
 st.title("Определение тональности")
@@ -40,4 +41,4 @@ if st.button('GO', key='GO'):
 
     for company in companies:
         sentiment = tsa.get_sentiment(text=text, company_name=company)
-        st.write(f"Тональность относительно компании {company} равна {sentiment}")
+        st.write(f"Тональность относительно компании {company} равна {sentiment} - {dict_tone[sentiment]}")
