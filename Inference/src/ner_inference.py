@@ -13,9 +13,9 @@ class NER_Pipeline:
     def __init__(self, model_name: str):
         model_path = Path(MODEL_PATH, Path(model_name))
         self._device = 'cuda' if cuda.is_available() else 'cpu'
-        self._tokenizer = AutoTokenizer.from_pretrained('DeepPavlov/xlm-roberta-large-en-ru', local_files_only=True)
+        self._tokenizer = AutoTokenizer.from_pretrained('DeepPavlov/xlm-roberta-large-en-ru')
         model = AutoModelForTokenClassification.from_pretrained('DeepPavlov/xlm-roberta-large-en-ru',
-                                                                num_labels=2, local_files_only=True)
+                                                                num_labels=2)
         model.load_state_dict(torch.load(model_path))
         model.to(self._device)
         model.eval()
