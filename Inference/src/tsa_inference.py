@@ -14,9 +14,9 @@ class TSA_Pipeline:
     def __init__(self, model_name: str):
         model_path = Path(MODEL_PATH, Path(model_name))
         self._device = 'cuda' if cuda.is_available() else 'cpu'
-        self._tokenizer = AutoTokenizer.from_pretrained('DeepPavlov/rubert-base-cased', local_files_only=True)
+        self._tokenizer = AutoTokenizer.from_pretrained('DeepPavlov/rubert-base-cased')
         model = BertForSequenceClassification.from_pretrained('DeepPavlov/rubert-base-cased',
-                                                              num_labels=5, local_files_only=True)
+                                                              num_labels=5)
         model.load_state_dict(torch.load(model_path))
         model.to(self._device)
         model.eval()
